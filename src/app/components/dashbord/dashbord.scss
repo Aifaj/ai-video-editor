@@ -1,0 +1,35 @@
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.hero-bg {
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-position: center center;
+  display: flex;
+  align-items: center;
+}
+
+.hero__text span {
+  font-size: 18px;
+  color: #fff;
+}
+
+.hero__text h2 {
+  font-size: 48px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.primary-btn {
+  display: inline-block;
+  padding: 10px 30px;
+  background: #e53637;
+  color: #fff;
+  margin-top: 20px;
+  text-decoration: none;
+  border-radius: 5px;
+}
