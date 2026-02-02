@@ -1,0 +1,55 @@
+<div class="video-editor">
+
+    <!-- ===== TOP TOOLBAR ===== -->
+    <div class="editor-toolbar shadow-sm">
+
+        <button class="tool-btn" (click)="fileInput.click()">📤 Upload</button>
+        <input type="file"
+               #fileInput
+               multiple
+               accept="video/*,image/*"
+               hidden
+               (change)="onFilesSelected($event)">
+
+        <button (click)="mergeAll()">✨ Merge Final Video</button>
+        <!-- <button class="tool-btn" (click)="openPanel('cut')">✂ Cut</button>
+        <button class="tool-btn" (click)="openPanel('trim')">🔪 Trim</button>
+        <button class="tool-btn" (click)="openPanel('speed')">⏩ Speed</button>
+        <button class="tool-btn" (click)="openPanel('filters')"> Filters</button>
+        <button class="tool-btn" (click)="openPanel('music')">🎵 Add Music</button>
+        <button class="tool-btn" (click)="mergeAll()">📥 Export</button> -->
+    </div>
+
+
+    <div class="row mt-3">
+
+        <!-- ===== LEFT SIDEBAR (ASSETS LIBRARY) ===== -->
+        <div class="col-lg-3 col-md-4 col-sm-12 editor-sidebar shadow-sm">
+            <h5 class="mb-3">Assets</h5>
+
+            <div class="asset-item"
+                 *ngFor="let item of assets; let i = index"
+                 >
+
+                <span>{{ item.name }} {{item.type}}</span>
+            </div>
+        </div>
+
+
+        <!-- ===== MAIN AREA ===== -->
+        <div class="col-lg-9 col-md-8 col-sm-12">
+
+            <!-- ===== VIDEO PREVIEW ===== -->
+            <div class="video-preview shadow-sm">
+                <video *ngIf="finalVideo" [src]="finalVideo" controls width="400"></video>
+            </div>
+
+
+
+          
+
+        </div>
+
+    </div>
+
+</div>
