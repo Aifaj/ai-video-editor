@@ -1,65 +1,38 @@
-   <!-- <div id="preloder">
-        <div class="loader"></div>
-    </div> -->
-<header class="custom-header shadow-sm">
-  <div class="container">
-    <nav class="navbar navbar-expand-lg">
-      <a class="navbar-brand" href="#">
-        <img src="assets/img/logo.png" class="logo" alt="Logo">
-      </a>
+<div class="dashboard-wrapper">
 
-      <!-- Mobile Toggle -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <!-- Menu -->
-      <div class="collapse navbar-collapse" id="mainMenu">
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-
-          <li class="nav-item">
-            <a class="nav-link active" href="#">Home</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="#">Portfolio</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="#">Services</a>
-          </li>
-
-          <!-- Dropdown -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Pages</a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Blog</a></li>
-              <li><a class="dropdown-item" href="#">Blog Details</a></li>
-              <li><a class="dropdown-item" href="#">Portfolio</a></li>
-              <li><a class="dropdown-item" href="#">About</a></li>
-            </ul>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="#">Contact</a>
-          </li>
-
-        </ul>
-
-        <!-- Social Icons -->
-        <div class="header-social d-flex align-items-center ms-lg-4">
-          <a href="#"><i class="fa fa-facebook-f"></i></a>
-          <a href="#"><i class="fa fa-twitter"></i></a>
-          <a href="#"><i class="fa fa-instagram"></i></a>
-          <a href="#"><i class="fa fa-youtube-play"></i></a>
-        </div>
-      </div>
-    </nav>
+  <!-- Animated Background -->
+  <div class="animated-bg">
+    <span class="shape shape1"></span>
+    <span class="shape shape2"></span>
+    <span class="shape shape3"></span>
+    <span class="shape shape4"></span>
   </div>
-</header>
 
-   
+  <!-- Hero Section -->
+  <section class="hero">
+    <div>
+      <h1 class="title">AI Creation Studio</h1>
+      <p class="subtitle">Edit photos, videos, AI shorts and Gemini—designed with futuristic UI.</p>
+    </div>
+
+    <img src="assets/img/dashboard-hero.jfif" class="hero-art" alt="Hero Art">
+  </section>
+
+  <!-- Feature Cards -->
+  <div class="row g-4 mt-4">
+    <div class="col-md-6 col-lg-3" *ngFor="let tool of tools">
+      <div class="feature-card">
+
+        <div class="icon-box" [ngClass]="tool.bg">
+          <i class="{{ tool.icon }}"></i>
+        </div>
+
+        <h5>{{ tool.title }}</h5>
+        <p>{{ tool.desc }}</p>
+
+        <a [routerLink]="tool.link" class="btn btn-outline-light w-100">Open</a>
+      </div>
+    </div>
+  </div>
+
+</div>

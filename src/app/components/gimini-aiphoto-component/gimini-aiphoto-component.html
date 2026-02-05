@@ -1,0 +1,527 @@
+<!-- HEADER -->
+<header class="header d-flex align-items-center justify-content-between px-3">
+  <button class="btn btn-outline-light d-md-none" (click)="toggleSidebar()">
+    ☰ Menu
+  </button>
+
+ <!-- Mobile Title -->
+<h4 class="header-title m-0 text-white d-md-none">
+  Gemini 3 AI Dashboard
+</h4>
+
+<!-- Desktop Title -->
+<h4 class="header-title m-0 text-white d-none d-md-block">
+  Gemini - 3 Creative AI Lab — Image, Photo, and Productivity Tools
+</h4>
+
+</header>
+
+<div class="dashboard-container">
+
+  <!-- OVERLAY (only mobile when sidebar is open) -->
+  <div class="overlay" 
+       *ngIf="sidebarOpen()" 
+       (click)="closeSidebar()">
+  </div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" [class.open]="sidebarOpen()">
+
+
+    <ul class="menu-list">
+
+       <li (click)="setTool('face-lock')" 
+          [class.active]="activeTool()==='face-lock'"> AI Face Lock Verification</li>
+
+      <li (click)="setTool('image-analyzer')" 
+          [class.active]="activeTool()==='image-analyzer'"> AI Image Analyzer</li>
+          
+      <li (click)="setTool('face')" 
+          [class.active]="activeTool()==='face'"> AI Face Attribute Detector</li>
+          
+      <li (click)="setTool('doc')" 
+            [class.active]="activeTool()==='doc'"> AI Document Reader</li>
+
+      <li (click)="setTool('caption')" 
+          [class.active]="activeTool()==='caption'"> AI Social Caption Generator</li>   
+          
+      <li (click)="setTool('thumbnail')" 
+          [class.active]="activeTool()==='thumbnail'"> AI YouTube Thumbnail Analyzer</li>    
+
+      <li (click)="setTool('crop')" 
+          [class.active]="activeTool()==='crop'"> AI Photo Crop Suggestion</li>
+
+
+      <li (click)="setTool('rename')" 
+          [class.active]="activeTool()==='rename'"> Smart File Renamer</li>
+
+      <li (click)="setTool('product')" 
+          [class.active]="activeTool()==='product'"> AI Product Listing Tool</li>
+
+      
+
+     
+
+    </ul>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="content-wrapper">
+
+ 
+    <div *ngIf="activeTool()==='image-analyzer'" class="container">
+
+  <h2 class="text-center fw-bold mb-4">Gemini 3 — AI Image Analyzer</h2>
+
+  <div class="text-center mb-4">
+    <label class="btn btn-primary px-4 py-2">
+      Upload Image
+      <input type="file" accept="image/*" (change)="onImageSelected($event,'image-analyzer')" hidden>
+    </label>
+  </div>
+
+  <!-- Loader -->
+  <div *ngIf="loadingAnalyzer()" class="text-center">
+    <div class="spinner-border text-primary"></div>
+    <p class="mt-2 fw-semibold">Analyzing image…</p>
+  </div>
+
+  <!-- Image + AI Result -->
+  <div class="row justify-content-center mt-4" *ngIf="selectedImageAnalyzer() && aiResponse()">
+
+    <!-- Original Image -->
+    <div class="col-md-5 mb-4">
+      <div class="card shadow-sm">
+        <div class="text-center card-header fw-bold bg-light">Uploaded Image</div>
+        <img [src]="selectedImageAnalyzer()" class="img-fluid rounded-bottom" />
+      </div>
+    </div>
+
+    <!-- AI Result -->
+    <div class="col-md-5 mb-4">
+      <div class="card shadow-sm p-3">
+
+        <h4 class="text-center fw-bold mb-2">{{ aiResponse().title }}</h4>
+
+        <p>{{ aiResponse().description }}</p>
+
+        <h6 class="fw-semibold mt-3">Tags:</h6>
+
+        <div class="d-flex flex-wrap gap-2">
+          <span *ngFor="let t of aiResponse().tags" class="badge bg-secondary px-3 py-2">
+            {{ t }}
+          </span>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+<div *ngIf="activeTool()==='face'" class="container">
+
+  <h2 class="text-center fw-bold mb-4">AI Face Attribute Detector</h2>
+
+  <!-- Upload -->
+  <div class="text-center mb-4">
+    <label class="btn btn-primary px-4 py-2">
+      Upload Face Image
+      <input type="file" accept="image/*" (change)="onImageSelected($event,'face')" hidden>
+    </label>
+  </div>
+
+  <!-- Loader -->
+  <div *ngIf="loadingFace()" class="text-center">
+    <div class="spinner-border text-primary"></div>
+    <p class="mt-2 fw-semibold">Analyzing face…</p>
+  </div>
+
+  <!-- Result -->
+  <div class="row justify-content-center mt-4" *ngIf="selectedImageFace() && faceData()">
+
+    <!-- Image -->
+    <div class="col-md-5 mb-4">
+      <div class="card shadow-sm">
+        <div class=" text-center card-header fw-bold bg-light">Uploaded Image</div>
+        <img [src]="selectedImageFace()" class="img-fluid rounded-bottom" />
+      </div>
+    </div>
+
+    <!-- AI FACE ATTRIBUTES -->
+    <div class="col-md-5 mb-4">
+      <div class="card shadow-sm p-3">
+
+        <h4 class=" text-center fw-bold mb-2">Face Attributes</h4>
+
+        <p><strong>Age Range:</strong> {{ faceData().age_range }}</p>
+        <p><strong>Gender Guess:</strong> {{ faceData().gender_guess }}</p>
+        <p><strong>Emotion:</strong> {{ faceData().emotion }}</p>
+
+        <h6 class="fw-semibold mt-3">Extra Attributes:</h6>
+        <div class="d-flex flex-wrap gap-2">
+          <span *ngFor="let a of faceData().attributes" class="badge bg-secondary px-3 py-2">
+            {{ a }}
+          </span>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+<div *ngIf="activeTool()==='face-lock'" class="container py-4">
+
+  <h2 class="text-center fw-bold mb-4">AI Face Lock Verification</h2>
+
+  <!-- STEP 1 — UPLOAD REGISTERED FACE -->
+  <div class="text-center mb-4">
+    <label class="btn btn-success px-4 py-2">
+      Upload Lock Face (Register)
+      <input type="file" accept="image/*" (change)="onFaceLockUpload($event)" hidden>
+    </label>
+  </div>
+
+  <!-- PREVIEW REGISTERED FACE -->
+  <div *ngIf="lockFace()" class="text-center mb-4">
+    <h5 class="fw-bold">Registered Face</h5>
+    <img [src]="lockFace()" class="preview-img">
+  </div>
+
+  <hr *ngIf="lockFace()" class="my-4">
+
+  <!-- STEP 2 — UPLOAD UNLOCK FACE -->
+  <div class="text-center mb-4" *ngIf="lockFace()">
+    <label class="btn btn-primary px-4 py-2">
+      Upload Unlock Face (Verify)
+      <input type="file" accept="image/*" (change)="onUnlockFaceUpload($event)" hidden>
+    </label>
+  </div>
+
+  <!-- LOADING -->
+  <div *ngIf="faceVerifying()" class="text-center">
+    <div class="spinner-border text-primary"></div>
+    <p class="mt-2 fw-semibold">Verifying face…</p>
+  </div>
+
+  <!-- RESULT -->
+  <div *ngIf="unlockFace() && faceMatchResult()" class="row justify-content-center mt-4">
+
+    <!-- Registered Face -->
+    <div class="col-md-5 mb-3">
+      <div class="card shadow-sm">
+        <div class="card-header bg-light fw-bold text-center">Registered Face</div>
+        <img [src]="lockFace()" class="img-fluid rounded-bottom">
+      </div>
+    </div>
+
+    <!-- Uploaded Unlock Face -->
+    <div class="col-md-5 mb-3">
+      <div class="card shadow-sm">
+        <div class="card-header bg-light fw-bold text-center">Unlock Attempt</div>
+        <img [src]="unlockFace()" class="img-fluid rounded-bottom">
+      </div>
+    </div>
+
+    <!-- MATCH RESULT -->
+    <div class="col-12 text-center mt-4">
+      <h3 [ngClass]="{
+        'text-success': faceMatchResult().match,
+        'text-danger': !faceMatchResult().match
+      }">
+        {{ faceMatchResult().message }}
+      </h3>
+
+      <p class="fw-semibold">Similarity Score: {{ faceMatchResult().score }}</p>
+    </div>
+
+  </div>
+
+</div>
+
+<div *ngIf="activeTool()==='doc'" class="container py-4">
+
+  <h2 class="text-center fw-bold mb-4">AI Document Reader</h2>
+
+  <!-- Upload -->
+  <div class="text-center mb-4">
+    <label class="btn btn-primary px-4 py-2">
+      Upload Document (PDF / Image)
+      <input type="file" accept=".pdf,image/*" (change)="onDocumentUpload($event)" hidden>
+    </label>
+  </div>
+
+  <!-- Loader -->
+  <div *ngIf="loadingDoc()" class="text-center">
+    <div class="spinner-border text-primary"></div>
+    <p class="mt-2 fw-semibold">Reading document…</p>
+  </div>
+
+  <!-- RESULT -->
+  <div *ngIf="docData()" class="mt-4">
+
+    <div class="card shadow-sm p-3">
+
+      <h4 class="fw-bold mb-3">Summary</h4>
+      <p>{{ docData().summary }}</p>
+
+      <hr>
+
+      <h5 class="fw-bold mb-2">Extracted Text</h5>
+      <p class="text-muted">{{ docData().text }}</p>
+
+      <hr>
+
+      <h5 class="fw-bold">Metadata</h5>
+      <ul>
+        <li><strong>Type:</strong> {{ docData().type }}</li>
+        <li><strong>Words:</strong> {{ docData().word_count }}</li>
+        <li><strong>Language:</strong> {{ docData().language }}</li>
+      </ul>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div *ngIf="activeTool()==='caption'" class="container py-4">
+
+  <h2 class="text-center fw-bold mb-4">AI Social Caption Generator</h2>
+
+  <!-- Upload Image -->
+  <div class="text-center mb-4">
+    <label class="btn btn-primary px-4 py-2">
+      Upload Image
+      <input type="file" accept="image/*" (change)="onCaptionImageUpload($event)" hidden>
+    </label>
+  </div>
+
+  <!-- Preview -->
+  <div *ngIf="captionImage()" class="text-center mb-3">
+    <img [src]="captionImage()" class="caption-preview-img">
+  </div>
+
+  <!-- Loader -->
+  <div *ngIf="loadingCaption()" class="text-center">
+    <div class="spinner-border text-primary"></div>
+    <p class="mt-2 fw-semibold">Generating caption…</p>
+  </div>
+
+  <!-- Result -->
+  <div *ngIf="captionResult()" class="card shadow-sm p-3 mt-4">
+
+    <h4 class="fw-bold">Generated Caption</h4>
+
+    <p class="fs-5 mt-2">{{ captionResult().caption }}</p>
+
+    <hr>
+
+    <h6 class="fw-bold mt-3">Hashtags</h6>
+    <div class="d-flex flex-wrap gap-2">
+      <span *ngFor="let h of captionResult().hashtags" class="badge bg-secondary px-3 py-2">
+        {{ h }}
+      </span>
+    </div>
+
+  </div>
+
+</div>
+
+<div *ngIf="activeTool()==='thumbnail'" class="container py-4">
+
+  <h2 class="text-center fw-bold mb-4">AI YouTube Thumbnail Analyzer</h2>
+
+  <!-- UPLOAD -->
+  <div class="text-center mb-4">
+    <label class="btn btn-primary px-4 py-2">
+      Upload Thumbnail
+      <input type="file" accept="image/*" (change)="onThumbnailUpload($event)" hidden>
+    </label>
+  </div>
+
+  <!-- PREVIEW -->
+  <div *ngIf="thumbnailImage()" class="text-center mb-3">
+    <img [src]="thumbnailImage()" class="thumbnail-preview-img">
+  </div>
+
+  <!-- LOADER -->
+  <div *ngIf="loadingThumbnail()" class="text-center">
+    <div class="spinner-border text-primary"></div>
+    <p class="mt-2 fw-semibold">Analyzing thumbnail…</p>
+  </div>
+
+  <!-- RESULT -->
+  <div *ngIf="thumbnailResult()" class="card shadow-sm p-3 mt-4">
+
+    <h4 class="fw-bold mb-3">Analysis Result</h4>
+
+    <p><strong>Overall Score:</strong> {{ thumbnailResult().overall_score }}</p>
+
+    <h5 class="fw-bold">Face Clarity</h5>
+    <p>{{ thumbnailResult().face_clarity }}</p>
+
+    <h5 class="fw-bold">Text Readability</h5>
+    <p>{{ thumbnailResult().text_readability }}</p>
+
+    <h5 class="fw-bold">Color Score</h5>
+    <p>{{ thumbnailResult().color_pop }}</p>
+
+    <h5 class="fw-bold">Clickability</h5>
+    <p>{{ thumbnailResult().clickability }}</p>
+
+    <hr>
+
+    <h5 class="fw-bold">Suggestions</h5>
+    <ul>
+      <li *ngFor="let s of thumbnailResult().suggestions">{{ s }}</li>
+    </ul>
+
+  </div>
+
+</div>
+
+
+    <div *ngIf="activeTool()==='crop'" class="container py-4">
+
+  <h2 class="text-center fw-bold mb-4">AI Photo Crop Suggestion</h2>
+
+  <!-- Upload -->
+  <div class="text-center mb-4">
+    <label class="btn btn-primary px-4 py-2">
+      Upload Image
+      <input type="file" accept="image/*" (change)="onCropImageUpload($event)" hidden>
+    </label>
+  </div>
+
+  <!-- Image Preview -->
+  <div *ngIf="cropImage()" class="text-center mb-3">
+    <img [src]="cropImage()" class="crop-preview-img">
+  </div>
+
+  <!-- Loader -->
+  <div *ngIf="loadingCrop()" class="text-center">
+    <div class="spinner-border text-primary"></div>
+    <p class="mt-2 fw-semibold">Analyzing crop suggestions…</p>
+  </div>
+
+  <!-- RESULT -->
+  <div *ngIf="cropResult()" class="card shadow-sm p-3 mt-4">
+
+    <h4 class="fw-bold mb-3">Suggested Crops</h4>
+
+    <div *ngFor="let c of cropResult().suggestions" class="mb-3">
+      <p><strong>{{ c.type }}</strong></p>
+      <small class="text-muted">Crop Area: {{ c.area }}</small>
+    </div>
+
+    <hr>
+
+    <h5 class="fw-bold">General Advice</h5>
+    <p>{{ cropResult().advice }}</p>
+
+  </div>
+
+</div>
+
+<div *ngIf="activeTool()==='rename'" class="container py-4">
+
+  <h2 class="text-center fw-bold mb-4">Smart File Renamer</h2>
+
+  <!-- Upload -->
+  <div class="text-center mb-4">
+    <label class="btn btn-primary px-4 py-2">
+      Upload File
+      <input type="file" (change)="onRenameFileUpload($event)" hidden>
+    </label>
+  </div>
+
+  <!-- Selected file name -->
+  <div *ngIf="renameFileName()" class="text-center mb-3">
+    <p class="fw-semibold">Original File: {{ renameFileName() }}</p>
+  </div>
+
+  <!-- Loader -->
+  <div *ngIf="loadingRename()" class="text-center">
+    <div class="spinner-border text-primary"></div>
+    <p class="mt-2 fw-semibold">Generating smart filename…</p>
+  </div>
+
+  <!-- Result -->
+  <div *ngIf="renameResult()" class="card shadow-sm p-3 mt-4">
+
+    <h4 class="fw-bold mb-3">Recommended Filename</h4>
+
+    <p class="fs-5">{{ renameResult().recommended }}</p>
+
+    <hr>
+
+    <h5 class="fw-bold">Other Suggestions</h5>
+    <ul>
+      <li *ngFor="let s of renameResult().suggestions">{{ s }}</li>
+    </ul>
+
+  </div>
+
+</div>
+
+
+<div *ngIf="activeTool()==='product'" class="container py-4">
+
+  <h2 class="text-center fw-bold mb-4">AI Product Listing Generator</h2>
+
+  <!-- Upload Image -->
+  <div class="text-center mb-4">
+    <label class="btn btn-primary px-4 py-2">
+      Upload Product Image
+      <input type="file" accept="image/*" (change)="onProductUpload($event)" hidden>
+    </label>
+  </div>
+
+  <!-- Preview -->
+  <div *ngIf="productImage()" class="text-center mb-4">
+    <img [src]="productImage()" class="product-preview-img">
+  </div>
+
+  <!-- Loader -->
+  <div *ngIf="loadingProduct()" class="text-center">
+    <div class="spinner-border text-primary"></div>
+    <p class="mt-2 fw-semibold">Generating product listing…</p>
+  </div>
+
+  <!-- Result -->
+  <div *ngIf="productResult()" class="card shadow-sm p-3">
+
+    <h4 class="fw-bold">Product Title</h4>
+    <p>{{ productResult().title }}</p>
+
+    <h5 class="fw-bold mt-3">Short Description</h5>
+    <p>{{ productResult().short_description }}</p>
+
+    <h5 class="fw-bold mt-3">Full Description</h5>
+    <p>{{ productResult().full_description }}</p>
+
+    <h5 class="fw-bold mt-3">Tags</h5>
+    <div class="d-flex flex-wrap gap-2">
+      <span *ngFor="let t of productResult().tags" class="badge bg-secondary">{{ t }}</span>
+    </div>
+
+    <h5 class="fw-bold mt-3">Category</h5>
+    <p>{{ productResult().category }}</p>
+
+    <h5 class="fw-bold mt-3">Suggested Price</h5>
+    <p>₹ {{ productResult().price }}</p>
+
+  </div>
+
+</div>
+
+
+  </main>
+
+</div>

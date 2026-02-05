@@ -32,7 +32,7 @@ export class Editor {
   console.log("Starting upload...");
 
   // ❗ MUST LOAD FIRST
-  await this.ffmpegService.loadFFmpeg();
+ // await this.ffmpegService.loadFFmpeg();
 
   console.log("FFmpeg ready, processing files...");
 
@@ -121,6 +121,24 @@ export class Editor {
 
     alert("🎉 Final merged video ready!");
   }
+
+mergeVideos() {
+  this.ffmpegService.mergeVideos(this.assets).subscribe((blob: any) => {
+    const file = new Blob([blob], { type: "video/mp4" });
+    const downloadUrl = URL.createObjectURL(file);
+
+    // Trigger download
+    const a = document.createElement("a");
+    a.href = downloadUrl;
+    a.download = "final.mp4";
+    a.click();
+
+    URL.revokeObjectURL(downloadUrl);
+
+    alert("🎉 Final merged video downloaded!");
+  });
+}
+
 
 }
 

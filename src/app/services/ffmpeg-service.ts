@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FFmpeg } from '@ffmpeg/ffmpeg';
 import { fetchFile } from '@ffmpeg/util';
@@ -10,7 +11,9 @@ export class FfmpegService {
     ffmpeg = new FFmpeg();
   isLoaded = false;
 
-  constructor() {}
+  constructor(private http:HttpClient) {}
+
+
 
   async loadFFmpeg() {
     if (this.isLoaded) {
@@ -27,4 +30,20 @@ export class FfmpegService {
     this.isLoaded = true;
     console.log("FFmpeg successfully loaded!");
   }
+
+ mergeVideos(assets: any[]) {
+  const formData = new FormData();
+
+  assets.forEach(item => {
+    formData.append("videos", item.file);
+  });
+
+  return this.http.post(
+    'http://localhost:5000/video/merge',
+    formData,
+    { responseType: 'arraybuffer' }
+  );
+}
+
+
 }
