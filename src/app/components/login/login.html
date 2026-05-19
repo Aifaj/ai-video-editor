@@ -1,0 +1,75 @@
+<div class="auth-wrapper">
+  <div class="overlay"></div>
+
+  <div class="auth-card">
+    <h3 class="text-center mb-3">
+      {{ isLogin ? 'Login' : 'Sign Up' }}
+    </h3>
+
+    <form *ngIf="isLogin">
+     
+      <!-- Email -->
+      <div class="mb-3">
+        <input type="email" class="form-control" placeholder="Email">
+      </div>
+
+      <!-- Password -->
+      <div class="mb-3">
+        <input type="password" class="form-control" placeholder="Password">
+      </div>
+
+      <button class="btn btn-primary w-100">
+        Login
+      </button>
+
+    </form>
+
+    <form *ngIf="!isLogin" [formGroup]="signupForm">
+      <!-- Name (Signup only) -->
+      <div  class="mb-3">
+        <input type="text" formControlName="name" class="form-control" placeholder="Full Name">
+        <small *ngIf="signupForm.get('name')?.invalid && signupForm.get('name')?.touched" class="form-text text-danger">
+          Name is required.
+        </small>
+      </div>  
+    
+      <!-- Email -->
+      <div class="mb-3">
+        <input type="email" formControlName="email" class="form-control" placeholder="Email">
+        <small *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched" class="form-text text-danger">
+          Please enter a valid email.
+        </small>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-3">
+        <input type="password" formControlName="password" class="form-control" placeholder="Password">
+        <small *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched" class="form-text text-danger">
+          Password is required.
+        </small>
+      </div>
+
+      <!-- Confirm Password (Signup only) -->
+      <div  class="mb-3">
+        <input type="password" formControlName="confirmPassword" class="form-control" placeholder="Confirm Password">
+        <small *ngIf="signupForm.get('confirmPassword')?.errors?.['passwordMismatch'] && signupForm.get('confirmPassword')?.touched" class="form-text text-danger">
+          Passwords do not match.
+        </small>
+
+      </div>
+
+      <button (click)="onSignup()" class="btn btn-primary w-100">
+         Register
+      </button>
+      
+    </form>
+
+    
+
+    <div class="text-center mt-3">
+      <a href="javascript:void(0)" (click)="toggleForm()">
+        {{ isLogin ? 'Create Account' : 'Already have an account? Login' }}
+      </a>
+    </div>
+  </div>
+</div>

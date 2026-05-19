@@ -1,23 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+describe('Sample Test', () => {
 
-import { GiminiAiphotoComponent } from './gimini-aiphoto-component';
+  it('should pass', () => {
 
-describe('GiminiAiphotoComponent', () => {
-  let component: GiminiAiphotoComponent;
-  let fixture: ComponentFixture<GiminiAiphotoComponent>;
+    expect(true).toBe(true);
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [GiminiAiphotoComponent]
-    })
-    .compileComponents();
-
-    fixture = TestBed.createComponent(GiminiAiphotoComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
 });

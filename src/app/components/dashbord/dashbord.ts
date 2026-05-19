@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-dashbord',
@@ -12,11 +13,18 @@ import { RouterModule } from '@angular/router';
 export class Dashbord {
  tools = [
   {
+    title: 'Gemini AI',
+    icon: 'fa-solid fa-robot',
+    desc: 'Generate, analyze and chat with Gemini AI.',
+    bg: 'bg-green',
+    link: '/giminiAiphoto'
+  },
+  {
     title: 'Photo Editor',
     icon: 'fa-solid fa-image',
     desc: 'AI-powered image editing and enhancement.',
     bg: 'bg-pink',
-    link: '/photo-editor'
+    link: '/photoEditor'
   },
   {
     title: 'Video Editor',
@@ -32,13 +40,18 @@ export class Dashbord {
     bg: 'bg-yellow',
     link: '/ai-shorts'
   },
-  {
-    title: 'Gemini AI',
-    icon: 'fa-solid fa-robot',
-    desc: 'Generate, analyze and chat with Gemini AI.',
-    bg: 'bg-green',
-    link: '/giminiAiphoto'
-  }
+  
 ];
+
+constructor(private router: Router) {}
+
+ openTool(link: string) {
+    if (link === '/giminiAiphoto' || link === '/photoEditor') {
+      this.router.navigate([link]);
+    } else {
+      const modal = new bootstrap.Modal(document.getElementById('comingSoonModal'));
+      modal.show();
+    }
+  }
 
 }

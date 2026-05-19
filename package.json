@@ -27,6 +27,7 @@
     "@angular/core": "^20.2.0",
     "@angular/forms": "^20.2.0",
     "@angular/platform-browser": "^20.2.0",
+    "@angular/platform-browser-dynamic": "^20.3.21",
     "@angular/router": "^20.2.0",
     "@ffmpeg/core": "^0.12.4",
     "@ffmpeg/ffmpeg": "^0.12.4",
@@ -36,9 +37,11 @@
     "jquery": "^4.0.0",
     "owl.carousel": "^2.3.4",
     "rxjs": "~7.8.0",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "zone.js": "^0.16.2"
   },
   "devDependencies": {
+    "@angular-devkit/build-angular": "^20.3.26",
     "@angular/build": "^20.2.0",
     "@angular/cli": "^20.2.0",
     "@angular/compiler-cli": "^20.2.0",
@@ -49,6 +52,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "karma-spec-reporter": "^0.0.36",
     "typescript": "~5.9.2"
   }
 }

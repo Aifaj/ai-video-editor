@@ -1,0 +1,109 @@
+<div class="editor-container">
+
+  <!-- LEFT SIDEBAR -->
+  <aside class="sidebar left-sidebar">
+
+    <h3>Tools</h3>
+
+    <!-- Exposure -->
+    <label>Exposure</label>
+    <input type="range" min="-100" max="100"
+           [value]="exposure()"
+           (input)="onExposure($event)" />
+
+    <!-- Saturation -->
+    <label>Saturation</label>
+    <input type="range" min="0" max="200"
+           [value]="saturation()"
+           (input)="onSaturation($event)" />
+
+    <!-- Hue -->
+    <label>Hue Rotate</label>
+    <input type="range" min="0" max="360"
+           [value]="hue()"
+           (input)="onHue($event)" />
+    <div class="value-display">{{ hue() }}°</div>
+
+    <!-- Blur -->
+    <label>Blur</label>
+    <input type="range" min="0" max="20"
+           [value]="blur()"
+           (input)="onBlur($event)" />
+
+    <!-- Opacity -->
+    <label>Opacity</label>
+    <input type="range" min="0" max="100"
+           [value]="opacity()"
+           (input)="onOpacity($event)" />
+
+    <!-- Resize -->
+    <label>Resize</label>
+    <div class="resize-box">
+
+       <input type="number"
+       [ngModel]="resizeW()"
+       (ngModelChange)="resizeW.set($event); onResize()" />
+
+<input type="number"
+       [ngModel]="resizeH()"
+       (ngModelChange)="resizeH.set($event)" />
+    </div>
+
+    <label class="form-check">
+      <input type="checkbox" class="form-check-input"
+             [(ngModel)]="keepAspect" />
+      Keep Aspect Ratio
+    </label>
+
+  </aside>
+
+  <!-- CENTER AREA -->
+  <main class="center-panel">
+
+    <div class="action-buttons">
+
+      <button class="btn upload" (click)="fileInput.click()">
+        Upload
+      </button>
+
+      <input #fileInput type="file" accept="image/*"
+             hidden (change)="onUpload($event)" />
+
+      <button class="btn undo" (click)="undo()">Undo</button>
+      <button class="btn clear" (click)="clear()">Clear</button>
+      <button class="btn redo" (click)="redo()">Redo</button>
+
+    </div>
+
+    <div class="canvas-box">
+      <canvas #canvas></canvas>
+
+      <div class="placeholder" *ngIf="!imageLoaded()">
+        <i class="fas fa-cloud-upload-alt"></i>
+        <p>No image uploaded</p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- RIGHT SIDEBAR -->
+  <aside class="sidebar right-sidebar">
+
+    <h3>Filters</h3>
+
+    <button class="filter-btn" (click)="applyFilter('grey')">GreyScale</button>
+    <button class="filter-btn" (click)="applyFilter('sepia')">Sepia</button>
+    <button class="filter-btn" (click)="applyFilter('amaro')">Amaro</button>
+    <button class="filter-btn" (click)="applyFilter('lark')">Lark</button>
+    <button class="filter-btn" (click)="applyFilter('flip')">Flip</button>
+    <button class="filter-btn" (click)="applyFilter('rainbow')">Rainbow</button>
+    <button class="filter-btn" (click)="applyFilter('crumble')">Crumble</button>
+    <button class="filter-btn" (click)="applyFilter('sunset')">Sunset</button>
+    <button class="filter-btn" (click)="applyFilter('prison')">Prison</button>
+
+    <button class="btn download-btn" (click)="download()">
+      Download
+    </button>
+
+  </aside>
+</div>

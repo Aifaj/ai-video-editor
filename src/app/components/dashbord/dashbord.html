@@ -30,9 +30,34 @@
         <h5>{{ tool.title }}</h5>
         <p>{{ tool.desc }}</p>
 
-        <a [routerLink]="tool.link" class="btn btn-outline-light w-100">Open</a>
+        <button 
+          class="btn btn-outline-light w-100"
+          (click)="openTool(tool.link)">
+          Open
+        </button>
+
       </div>
     </div>
   </div>
 
 </div>
+
+<!-- Coming Soon Modal -->
+<div class="modal fade" id="comingSoonModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-center p-4">
+
+      <h4 class="mb-3">🚀 Coming Soon!</h4>
+      <p class="mb-4">This feature is coming soon. You can access <strong>Gemini AI</strong> for now!</p>
+
+      <a 
+        routerLink="/giminiAiphoto" 
+        class="btn btn-primary w-100"
+        data-bs-dismiss="modal">
+        Go to Gemini AI
+      </a>
+
+    </div>
+  </div>
+</div>
+

@@ -10,7 +10,7 @@
 </h4>
 
 <!-- Desktop Title -->
-<h4 class="header-title m-0 text-white d-none d-md-block">
+<h4 class="header-title-dextop m-0 text-white d-none d-md-block">
   Gemini - 3 Creative AI Lab — Image, Photo, and Productivity Tools
 </h4>
 
@@ -69,7 +69,7 @@
   <main class="content-wrapper">
 
  
-    <div *ngIf="activeTool()==='image-analyzer'" class="container">
+    <div *ngIf="activeTool()==='image-analyzer'" class="container py-4">
 
   <h2 class="text-center fw-bold mb-4">Gemini 3 — AI Image Analyzer</h2>
 
@@ -90,11 +90,9 @@
   <div class="row justify-content-center mt-4" *ngIf="selectedImageAnalyzer() && aiResponse()">
 
     <!-- Original Image -->
-    <div class="col-md-5 mb-4">
-      <div class="card shadow-sm">
-        <div class="text-center card-header fw-bold bg-light">Uploaded Image</div>
-        <img [src]="selectedImageAnalyzer()" class="img-fluid rounded-bottom" />
-      </div>
+    <div class=" text-center col-md-5 mb-4">
+        <h5 class="fw-bold">Uploaded Image</h5>
+        <img [src]="selectedImageAnalyzer()" class="preview-img" />
     </div>
 
     <!-- AI Result -->
@@ -121,7 +119,7 @@
 </div>
 
 
-<div *ngIf="activeTool()==='face'" class="container">
+<div *ngIf="activeTool()==='face'" class="container py-4">
 
   <h2 class="text-center fw-bold mb-4">AI Face Attribute Detector</h2>
 
@@ -143,11 +141,9 @@
   <div class="row justify-content-center mt-4" *ngIf="selectedImageFace() && faceData()">
 
     <!-- Image -->
-    <div class="col-md-5 mb-4">
-      <div class="card shadow-sm">
-        <div class=" text-center card-header fw-bold bg-light">Uploaded Image</div>
-        <img [src]="selectedImageFace()" class="img-fluid rounded-bottom" />
-      </div>
+    <div class="text-center col-md-5 mb-4">
+        <h5 class="fw-bold">Uploaded Image</h5>
+        <img [src]="selectedImageFace()" class="preview-img" />
     </div>
 
     <!-- AI FACE ATTRIBUTES -->
@@ -213,19 +209,15 @@
   <div *ngIf="unlockFace() && faceMatchResult()" class="row justify-content-center mt-4">
 
     <!-- Registered Face -->
-    <div class="col-md-5 mb-3">
-      <div class="card shadow-sm">
-        <div class="card-header bg-light fw-bold text-center">Registered Face</div>
-        <img [src]="lockFace()" class="img-fluid rounded-bottom">
-      </div>
+    <div class="text-center col-md-5 mb-3">
+        <h5 class="fw-bold">Registered Face</h5>
+        <img [src]="lockFace()" class="preview-img">
     </div>
 
     <!-- Uploaded Unlock Face -->
-    <div class="col-md-5 mb-3">
-      <div class="card shadow-sm">
-        <div class="card-header bg-light fw-bold text-center">Unlock Attempt</div>
-        <img [src]="unlockFace()" class="img-fluid rounded-bottom">
-      </div>
+    <div class="text-center col-md-5 mb-3">
+        <h5 class="fw-bold">Unlock Attempt</h5>
+        <img [src]="unlockFace()" class="preview-img">
     </div>
 
     <!-- MATCH RESULT -->
@@ -273,7 +265,7 @@
       <hr>
 
       <h5 class="fw-bold mb-2">Extracted Text</h5>
-      <p class="text-muted">{{ docData().text }}</p>
+      <p >{{ docData().text }}</p>
 
       <hr>
 
@@ -304,7 +296,7 @@
 
   <!-- Preview -->
   <div *ngIf="captionImage()" class="text-center mb-3">
-    <img [src]="captionImage()" class="caption-preview-img">
+    <img [src]="captionImage()" class="preview-img">
   </div>
 
   <!-- Loader -->
@@ -347,7 +339,7 @@
 
   <!-- PREVIEW -->
   <div *ngIf="thumbnailImage()" class="text-center mb-3">
-    <img [src]="thumbnailImage()" class="thumbnail-preview-img">
+    <img [src]="thumbnailImage()" class="preview-img">
   </div>
 
   <!-- LOADER -->
@@ -401,7 +393,7 @@
 
   <!-- Image Preview -->
   <div *ngIf="cropImage()" class="text-center mb-3">
-    <img [src]="cropImage()" class="crop-preview-img">
+    <img [src]="cropImage()" class="preview-img">
   </div>
 
   <!-- Loader -->
@@ -485,7 +477,7 @@
 
   <!-- Preview -->
   <div *ngIf="productImage()" class="text-center mb-4">
-    <img [src]="productImage()" class="product-preview-img">
+    <img [src]="productImage()" class="preview-img">
   </div>
 
   <!-- Loader -->

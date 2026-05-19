@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environments';
 
 @Injectable({ providedIn: 'root' })
 export class GiminiAiphotoService {
 
-  private apiUrl = 'http://localhost:5000/api/giminiAiphoto';
+  private apiUrl = environment.apiBase;
 
   constructor(private http: HttpClient) {}
 
