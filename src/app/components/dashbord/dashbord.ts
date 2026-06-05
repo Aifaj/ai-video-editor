@@ -6,6 +6,7 @@ declare var bootstrap: any;
 
 @Component({
   selector: 'app-dashbord',
+  standalone:true,
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './dashbord.html',
   styleUrl: './dashbord.scss',
