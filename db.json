@@ -1,0 +1,37 @@
+{
+  "To Run This Json Server": [
+    "Run `npx json-server --watch db.json --port 3000` in the terminal"
+  ],
+  "users": [
+    {
+      "id": 1,
+      "email": "admin@test.com",
+      "password": "123456",
+      "role": "admin"
+    },
+    {
+      "id": 2,
+      "email": "user@test.com",
+      "password": "123456",
+      "role": "user"
+    }
+  ],
+  "posts": [
+    {
+      "name": "a",
+      "email": "abcd@gmail.com",
+      "password": "abcd",
+      "id": 1
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

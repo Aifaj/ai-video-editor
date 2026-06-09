@@ -15,3 +15,10 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands'
+
+beforeEach(() => {
+  cy.clearCookies();
+  cy.clearLocalStorage();
+});
+
+//Here you write code that should automatically run for all E2E tests.

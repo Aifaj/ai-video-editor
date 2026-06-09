@@ -9,6 +9,13 @@ export const routes: Routes = [
     {path:'Studentclass', loadComponent: () => import('./components/studentclass/studentclass').then(m => m.Studentclass)},
     {path:'login', loadComponent: () => import('./components/login/login').then(m => m.Login)},
 
+    // for jwt security
+    {path:"jwtLogin", loadComponent:() => import('./jwt/component/jwt-login/jwt-login').then(m => m.JwtLogin)},
+    {path:'jwtAdmin', loadComponent: () => import('./jwt/component/admin-dash/admin-dash').then(m => m.AdminDash)},
+    {path:'jwtUser', loadComponent: () => import('./jwt/component/user-dash/user-dash').then(m => m.UserDash)},
+    {path:'', redirectTo:'jwtLogin', pathMatch:'full'},
+
+
     // {path:'', redirectTo:'login', pathMatch:'full'},
-     {path:'', redirectTo:'dashbord', pathMatch:'full'},
+     //{path:'', redirectTo:'dashbord', pathMatch:'full'},
 ];

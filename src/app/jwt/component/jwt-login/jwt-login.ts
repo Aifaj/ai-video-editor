@@ -1,17 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, FormsModule, PatternValidator, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
-import { LoginService } from '../../services/login';
 import { Router } from '@angular/router';
-
+import { Auth } from '../../service/auth';
 @Component({
-  selector: 'app-login',
+  selector: 'app-jwt-login',
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
-  templateUrl: './login.html',
-  styleUrl: './login.scss',
+  templateUrl: './jwt-login.html',
+  styleUrl: './jwt-login.scss',
 })
-export class Login {
-  isLogin: boolean = true;
+export class JwtLogin {
+
+isLogin: boolean = true;
 
   signupForm!: FormGroup;
 
@@ -28,7 +28,7 @@ export class Login {
 
   }
 
-  constructor(private fb: FormBuilder, private userService: LoginService, private router: Router, private cdr: ChangeDetectorRef) {
+  constructor(private fb: FormBuilder, private userService: Auth, private router: Router, private cdr: ChangeDetectorRef) {
     this.createsignupForm();
   }
 
@@ -57,10 +57,11 @@ export class Login {
   onSignup() {
     if (this.signupForm.valid) {
       console.log(this.signupForm.value)
-      this.userService.register({
+      this.userService.register('register', {
         name: this.signupForm.get('name')?.value,
         email: this.signupForm.get('email')?.value,
-        password: this.signupForm.get('password')?.value
+        password: this.signupForm.get('password')?.value,
+        role: 'user'
       }).subscribe(res => {
         console.log('User Registered', res);
         if (res) {
@@ -74,23 +75,44 @@ export class Login {
   }
 
 
-  login() {
-    console.log('Login clicked');
-    this.userService.login(this.email, this.password)
-      .subscribe((users: any) => {
+  login(): void {
 
-        if (users.length > 0) {
-          console.log('Login Success', users[0]);
-          this.loginError = 'Login Successful';
-          this.cdr.detectChanges();
-          this.router.navigate(['/dashbord']);
-        } else {
-          this.loginError = 'Invalid email or password';
-          this.cdr.detectChanges();
-          console.log('Login Failed');
+
+    this.userService
+      .login({
+        email: this.email,
+        password: this.password
+      })
+      .subscribe({
+
+        next: (res) => {
+
+          console.log(res);
+
+
+          if (res.user.role === 'admin') {
+
+            this.router.navigate([
+              '/jwtAdmin'
+            ]);
+
+          } else {
+
+            this.router.navigate([
+              '/jwtUser'
+            ]);
+
+          }
+        },
+
+        error: (err) => {
+          alert(
+            err?.error?.msg ||
+            'Login Failed'
+          );
         }
-
       });
   }
 
 }
+
